@@ -55,3 +55,80 @@ variable "kubernetes_dashboard" {
   default     = "false"
   description = "The status of the Kubernetes Dashboard add-on"
 }
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Default node pool config
+# ----------------------------------------------------------------------------------------------------------------------
+
+variable "machine_type" {
+  description = "Google Compute Engine machine type for default node pool"
+  type        = "string"
+  default     = "n1-standard-1"
+}
+
+variable "disk_size_gb" {
+  description = "Size of the disk attached to each node in default pool"
+  type        = "string"
+  default     = "100"
+}
+
+variable "preemptible" {
+  description = "Whether or not the underlying node VMs are preemptible in default pool"
+  type        = "string"
+  default     = "false"
+}
+
+variable "tags" {
+  description = "Instance tags applied to all nodes in default pool to identify valid sources or targets for network firewalls"
+  type        = "list"
+  default     = []
+}
+
+variable "labels" {
+  description = "The Kubernetes labels (key/value pairs) to be applied to each node in default pool"
+  type        = "map"
+  default     = {}
+}
+
+variable "taint" {
+  # https://cloud.google.com/kubernetes-engine/docs/how-to/node-taints
+  description = "Kubernetes taints to apply to each node in default pool"
+  type        = "list"
+  default     = []
+}
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Default node pool autoscale configuration
+#
+# https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-autoscaler
+# ----------------------------------------------------------------------------------------------------------------------
+
+variable "min_node_count" {
+  description = "Minimum number of nodes in default pool"
+  type        = "string"
+  default     = "1"
+}
+
+variable "max_node_count" {
+  description = "Maximum number of nodes in default pool"
+  type        = "string"
+  default     = "1"
+}
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Default node pool management configuration
+# ----------------------------------------------------------------------------------------------------------------------
+
+variable "auto_repair" {
+  # https://cloud.google.com/kubernetes-engine/docs/concepts/node-auto-repair
+  description = "Sets Auto-Repair feature."
+  type        = "string"
+  default     = "false"
+}
+
+variable "auto_upgrade" {
+  # https://cloud.google.com/kubernetes-engine/docs/concepts/node-auto-upgrades
+  description = "Sets Auto-Upgrade feature."
+  type        = "string"
+  default     = "false"
+}

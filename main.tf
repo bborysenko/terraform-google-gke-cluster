@@ -40,12 +40,26 @@ resource "google_container_cluster" "cluster" {
 }
 
 module "default" {
-  source         = "bborysenko/gke-node-pool/google"
-  version        = "0.1.0"
-  name           = "default-pool"
-  zone           = "${var.zone}"
-  cluster        = "${var.name}"
-  machine_type   = "n1-standard-1"
-  min_node_count = "1"
-  max_node_count = "1"
+  source  = "bborysenko/gke-node-pool/google"
+  version = "0.1.0"
+
+  name    = "default-pool"
+  zone    = "${var.zone}"
+  cluster = "${var.name}"
+
+  # Node pool autoscaling configuration
+  min_node_count = "${var.min_node_count}"
+  max_node_count = "${var.max_node_count}"
+
+  # Node pool management configuration
+  auto_repair  = "${var.auto_repair}"
+  auto_upgrade = "${var.auto_upgrade}"
+
+  # Node pool configuration
+  machine_type = "${var.machine_type}"
+  disk_size_gb = "${var.disk_size_gb}"
+  preemptible  = "${var.preemptible}"
+  tags         = "${var.tags}"
+  labels       = "${var.labels}"
+  taint        = "${var.taint}"
 }
