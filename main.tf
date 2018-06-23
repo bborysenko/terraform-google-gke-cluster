@@ -6,7 +6,13 @@ resource "google_container_cluster" "cluster" {
   name               = "${var.name}"
   zone               = "${var.zone}"
   min_master_version = "${var.min_master_version != "false" ? var.min_master_version : data.google_container_engine_versions.zone.default_cluster_version }"
-
+  
+  # TODO: workaround for https://github.com/terraform-providers/terraform-provider-google/issues/988
+  #
+  #  ~ module.cluster.google_container_cluster.cluster
+  #    network:    "projects/rz-labs/global/networks/production" => "production"
+  #    subnetwork: "projects/rz-labs/regions/europe-west3/subnetworks/production" => "production"
+  #
   network    = "${var.network}"
   subnetwork = "${var.subnetwork}"
 
